@@ -142,6 +142,6 @@ automate parsing(vector<char> alphabet)
         cout << "Probleme de fichier txt" << endl;
     }
     automate A = createAutomate(nbTransitions ,nbSymboles, nbEtats, nbEtatsEntrees, nbEtatsSorties, listeEtatsEntrees, listeEtatsSorties, listeEtats);
-   
+    
     return A;
 }

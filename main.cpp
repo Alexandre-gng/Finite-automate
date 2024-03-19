@@ -6,13 +6,22 @@ vector<char> alphabet = {'a', 'b', 'c', 'd', 'e', 'f','g', 'h', 'i', 'j', 'k', '
 
 int main() 
 {
+    cout << "LANCEMENT PROGRAMME" << endl;
     automate A = parsing(alphabet);
 
     printAutomate(A, alphabet);
 
-    printInformationsAutomate(A);
+    printInformationsAutomate(A, alphabet);
 
-    standardisationAutomate(&A);
+    automate* AStandard = standardisationAutomate(&A);
+
+    printAutomate(*AStandard, alphabet);
+
+    printInformationsAutomate(*AStandard, alphabet);
+
+    automate* ADeterministe = determinisationAutomate(AStandard);
+
+
     return 0;
 }
 
@@ -20,7 +29,7 @@ int main()
 
 /*
 int choix;
-cout << "Afficher l'automate (1)\n" << "Affiher les informations de l'automate (2)\n";
+cout << "Afficher l'automate (1)\n" << "Afficher les informations de l'automate (2)\n" << "Tester la reconnaissance d'un mot (3)\n";
 cin >> choix;
 if (choix == 1)
 {
@@ -30,4 +39,9 @@ if (choix == 2)
 {
     printInformationsAutomate(A);
 }
+if (choix == 3)
+{
+    
+}
+
  */

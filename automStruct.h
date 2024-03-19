@@ -17,6 +17,7 @@ typedef struct etat {
     bool sortie;
 } etat;
 
+
 // ========================= structure automate =========================
 typedef struct automate {
     int nbSymboles, nbTransitions;
@@ -33,21 +34,29 @@ automate parsing(vector<char>);
 
 
 // ========================= Fonctions ciblant un automate =========================
-// Créer un automate
+// Crée un automate
 automate createAutomate(int, int , int , int , int , vector<etat*>, vector<etat*>, vector<etat*>);
 // Affichage du tableau de l'automate
 void printAutomate(automate, vector<char>);
 // Affichage des informations sur l'automate
-void printInformationsAutomate(automate);
+void printInformationsAutomate(automate, vector<char>);
 // Vérifie si un automate est déterministe
-int checkDeterministe(automate);
+vector<string> checkDeterministe(automate, vector<char>);
 // Vérifie si un automate est standard
-int checkStandard(automate);
+vector<string> checkStandard(automate, vector<char>);
 // Vérifie si un automate est complet
-int checkComplet(automate);
+vector<string> checkComplet(automate, vector<char>);
 
 // Standardise un automate
 automate* standardisationAutomate(automate*);
+// Déterminise un automate
+automate* determinisationAutomate(automate*);
+// Complète un automate
+automate* completionAutomate(automate*);
+
+// Test de reconnaissance d'un mot
+bool testReconnaissanceMot(automate, string);
+
 
 // ========================= Fonctions ciblant un état =========================
 // Créer un état
@@ -58,6 +67,8 @@ etat* createEtat(int, bool, bool, int, int);
 // Vérifie si un INT est dans vector<int>
 bool verifINTinVECTOR(int, vector<int>);
 // Vérifie si un CHAR est dans vector<char>
+bool verifCHARinVECTOR(char, vector<char>);
+// Retourne l'index d'un caractère dans un vector<string>
 int indexCHARinVECTOR(char, vector<char>);
 
 #endif //AUTOMATE_AUTOMSTRUCT_H
