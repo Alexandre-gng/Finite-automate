@@ -8,19 +8,20 @@ int main()
 {
     cout << "LANCEMENT PROGRAMME" << endl;
     automate A = parsing(alphabet);
-
     printAutomate(A, alphabet);
-
     printInformationsAutomate(A, alphabet);
 
+
     automate* AStandard = standardisationAutomate(&A);
-
     printAutomate(*AStandard, alphabet);
-
     printInformationsAutomate(*AStandard, alphabet);
 
-    automate* ADeterministe = determinisationAutomate(AStandard);
 
+    automate* AComplet = completionAutomate(AStandard);
+    printAutomate(*AComplet, alphabet);
+    printInformationsAutomate(*AComplet, alphabet);
+
+    printAutomate(A, alphabet);
 
     return 0;
 }

@@ -15,6 +15,7 @@ typedef struct etat {
     int etatID;
     bool entree;
     bool sortie;
+    char name;
 } etat;
 
 

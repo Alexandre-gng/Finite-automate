@@ -21,7 +21,20 @@ void printAutomate(automate A, vector<char> alphabet)
 {
     // 2*nbEtats - 1 = nb caractère ds les colonnes [1; nbSymboles]
     int TEMPcpt = 0;
+    int IDEtatP = -1; int IDEtatI = -1;
     vector<int> TEMPlisteINT;
+    // Obtention de l'ID de l'état poubelle 
+    for (auto i : A.listeEtats)
+    {
+        if (i->name == *"P")
+        {
+            IDEtatP = i->etatID;
+        }
+        if (i->name == *"i")
+        {
+            IDEtatI = i->name;
+        }
+    }
     cout << "    | etats |";
     for (int i = 0; i<A.nbSymboles; i++)
     {
@@ -41,13 +54,57 @@ void printAutomate(automate A, vector<char> alphabet)
         if ((A.listeEtats[j]->entree == true) && (A.listeEtats[j]->sortie == true)) // Si état d'entrée et de sortie
         {
             cout << "\nE/S |   ";
-            cout << A.listeEtats[j]->etatID << "   |";
+            if (A.listeEtats[j]->name != *"i" && A.listeEtats[j]->name != *"P")
+            {
+                cout << A.listeEtats[j]->etatID << "   |";
+            }
+            else
+            {
+                cout << "i" << "   |";
+            }
+            for (int m = 0; m < A.nbSymboles; m++) // TOUTE CETTE BOUCLE EST UN PUR COPIE/COLLE, ATTENDRE D'AUTRES TESTS POUR VALIDER
+            {
+                TEMPcpt = 0;
+                TEMPlisteINT.clear();
+                for (int s = 0; s < A.nbEtats; s++)
+                {
+                    if (A.listeEtats[j]->listeEtatsSortants[m][s] != NULL)
+                    {
+                        TEMPcpt++;
+                        TEMPlisteINT.push_back(A.listeEtats[j]->listeEtatsSortants[m][s]->etatID);
+                    }
+                }
+                for (int d = 0; d < TEMPcpt; d++)
+                {
+                    cout << " ";
+                    if (TEMPlisteINT[d] == IDEtatP)
+                    {
+                        cout << "P";
+                    }
+                    else
+                    {
+                        cout << TEMPlisteINT[d];
+                    }
+                }
+                for (int q = 0; q < A.nbEtats * A.nbSymboles + 1 - TEMPcpt * 2; q++)
+                {
+                    cout << " ";
+                }
+                cout << "|";
+            }
         }
         if ((A.listeEtats[j]->entree == true) && (A.listeEtats[j]->sortie == false)) // Si état d'entrée
         {
            
             cout << "\n E  |   ";
-            cout << A.listeEtats[j]->etatID << "   |";
+            if (A.listeEtats[j]->name != *"i" && A.listeEtats[j]->name != *"P")
+            {
+                cout << A.listeEtats[j]->etatID << "   |";
+            }
+            else
+            {
+                cout << "i" << "   |";
+            }
             for (int m = 0; m < A.nbSymboles; m++)
             {
                 TEMPcpt = 0;
@@ -63,7 +120,14 @@ void printAutomate(automate A, vector<char> alphabet)
                 for (int d = 0; d < TEMPcpt; d++)
                 {
                     cout << " ";
-                    cout << TEMPlisteINT[d];
+                    if (TEMPlisteINT[d] == IDEtatP)
+                    {
+                        cout << "P";
+                    }
+                    else
+                    {
+                        cout << TEMPlisteINT[d];
+                    }
                 }
                 for (int q = 0; q < A.nbEtats*A.nbSymboles+1-TEMPcpt*2; q++)
                 {
@@ -75,7 +139,14 @@ void printAutomate(automate A, vector<char> alphabet)
         if ((A.listeEtats[j]->entree == false) && (A.listeEtats[j]->sortie == true)) // Si état de sortie
         {
             cout << "\n S  |   ";
-            cout << A.listeEtats[j]->etatID << "   |";
+            if (A.listeEtats[j]->name != *"i" && A.listeEtats[j]->name != *"P")
+            {
+                cout << A.listeEtats[j]->etatID << "   |";
+            }
+            else
+            {
+                cout << "i" << "   |";
+            }
             for (int m = 0; m < A.nbSymboles; m++)
             {
                 TEMPcpt = 0;
@@ -91,7 +162,14 @@ void printAutomate(automate A, vector<char> alphabet)
                 for (int d = 0; d < TEMPcpt; d++)
                 {
                     cout << " ";
-                    cout << TEMPlisteINT[d];
+                    if (TEMPlisteINT[d] == IDEtatP)
+                    {
+                        cout << "P";
+                    }
+                    else
+                    {
+                        cout << TEMPlisteINT[d];
+                    }
                 }
                 for (int q = 0; q < A.nbEtats*A.nbSymboles+1-TEMPcpt*2; q++)
                 {
@@ -103,7 +181,14 @@ void printAutomate(automate A, vector<char> alphabet)
         if ((A.listeEtats[j]->entree == false) && (A.listeEtats[j]->sortie == false)) // Si état sans sortie/ entrée
         {
             cout << "\n    |   ";
-            cout << A.listeEtats[j]->etatID << "   |";
+            if (A.listeEtats[j]->name != *"P")
+            {
+                cout << A.listeEtats[j]->etatID << "   |";
+            }
+            else
+            {
+                cout << "P" << "   |";
+            }
             for (int m = 0; m < A.nbSymboles; m++)
             {
                 TEMPcpt = 0;
@@ -119,7 +204,14 @@ void printAutomate(automate A, vector<char> alphabet)
                 for (int d = 0; d < TEMPcpt; d++)
                 {
                     cout << " ";
-                    cout << TEMPlisteINT[d];
+                    if (TEMPlisteINT[d] == IDEtatP)
+                    {
+                        cout << "P";
+                    }
+                    else
+                    {
+                        cout << TEMPlisteINT[d];
+                    }
                 }
                 for (int q = 0; q < A.nbEtats*A.nbSymboles+1-TEMPcpt*2; q++)
                 {
@@ -243,13 +335,20 @@ vector<string> checkStandard(automate A, vector<char> alphabet)
 // Vérifie si un automate est complet
 vector<string> checkComplet(automate A, vector<char> alphabet)
 {
+    int cpt = 0;
     vector<string> resTestStandard(2);
     for (int i = 0; i < A.nbEtats; i++)
     {
         for (int m = 0; m < A.nbSymboles; m++)
         {
-            for (int n = 0; n < A.nbEtats; n++) {
-                if (A.listeEtats[i]->listeEtatsSortants[m][n] != NULL)
+            int cpt = 0;
+            for (int n = 0; n < A.nbEtats; n++)
+            {
+                if (A.listeEtats[i]->listeEtatsSortants[m][n] == NULL)
+                {
+                    cpt++;
+                }
+                if (cpt == A.nbEtats)
                 {
                     resTestStandard[0] = "0";
                     resTestStandard[1] = "il existe au moins un etat (#" + to_string(i) + " et " + alphabet[m] + ") qui ne possede pas de transition sortante d un des caracteres";
@@ -268,7 +367,8 @@ automate* standardisationAutomate(automate *A)
 {
     automate* Astandard = A;
     etat* E = createEtat(Astandard->nbEtats, true, false, Astandard->nbSymboles, Astandard->nbEtats);
-    
+    E->name = *"i";
+
     int EtatEntrantAutomateID = 0;
 
     vector<int> TEMPSymboleINT;
@@ -348,17 +448,38 @@ automate* determinisationAutomate(automate* A)
 automate* completionAutomate(automate* A)
 {
     automate* AComplet = A;
-    etat* P = createEtat(55, false, false, AComplet->nbSymboles, AComplet->nbEtats);
+    etat* P = createEtat(AComplet->nbEtats, false, false, AComplet->nbSymboles, AComplet->nbEtats);
+    P->name = *"P";
     // Augmentation de l'allocation mémoire de listeEtats VECTOR
-    AComplet->listeEtats[AComplet->nbEtats] = P;
     AComplet->nbEtats++;
-
+    AComplet->listeEtats.resize(AComplet->nbEtats);
+    AComplet->listeEtats[AComplet->nbEtats-1] = P;
+    for (int i = 0; i < AComplet->nbSymboles; i++)
+    {
+        P->listeEtatsEntrants[i][P->etatID] = P;
+        P->listeEtatsSortants[i][P->etatID] = P;
+    }
     for (int i = 0; i < AComplet->nbEtats; i++)
     {
-
+        for (int m = 0; m < AComplet->nbSymboles; m++)
+        {
+            int cpt = 0;
+            for (int n = 0; n < AComplet->nbEtats; n++)
+            {
+                if (AComplet->listeEtats[i]->listeEtatsSortants[m][n] == NULL)
+                {
+                    cpt++;
+                }
+                if (cpt == AComplet->nbEtats)
+                {
+                    AComplet->listeEtats[i]->listeEtatsSortants[m][n] = P;
+                    P->listeEtatsEntrants[m][i] = AComplet->listeEtats[i];
+                    break;
+                }
+            }
+        }
     }
-
-    return A;
+    return AComplet;
 }
 
 // Teste la reconnaissance d'un mot sur un automate
