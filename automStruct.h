@@ -15,7 +15,7 @@ typedef struct etat {
     int etatID;
     bool entree;
     bool sortie;
-    char name;
+    string name;
 } etat;
 
 
@@ -49,14 +49,17 @@ vector<string> checkStandard(automate, vector<char>);
 vector<string> checkComplet(automate, vector<char>);
 
 // Standardise un automate
-automate* standardisationAutomate(automate*);
+automate standardisationAutomate(automate*);
 // Déterminise un automate
-automate* determinisationAutomate(automate*);
+automate determinisationAutomate(automate*);
 // Complète un automate
-automate* completionAutomate(automate*);
+automate completionAutomate(automate*);
+// Complément du langage d'un automate
+automate complementAutomate(automate*);
+
 
 // Test de reconnaissance d'un mot
-bool testReconnaissanceMot(automate, string);
+bool testReconnaissanceMot(automate, vector<string>);
 
 
 // ========================= Fonctions ciblant un état =========================
@@ -69,6 +72,8 @@ etat* createEtat(int, bool, bool, int, int);
 bool verifINTinVECTOR(int, vector<int>);
 // Vérifie si un CHAR est dans vector<char>
 bool verifCHARinVECTOR(char, vector<char>);
+// Vérifie si un STRING est dans vector<string>
+bool verifSTRINGinVECTOR(string, vector<string>);
 // Retourne l'index d'un caractère dans un vector<string>
 int indexCHARinVECTOR(char, vector<char>);
 

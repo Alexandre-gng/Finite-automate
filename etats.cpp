@@ -7,7 +7,7 @@ etat* createEtat(int EtatID, bool Entree, bool Sortie, int NB_SYMBOL, int NB_ETA
     E->etatID = EtatID;
     E->entree = Entree;
     E->sortie = Sortie;
-
+    E->name = to_string(EtatID);
     // Alocation mémoire de listeEtatsSortants
     E->listeEtatsSortants.resize(NB_SYMBOL+1);
     for (auto &symboleVector : E->listeEtatsSortants)
