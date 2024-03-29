@@ -1,2 +1,2 @@
 # Finite-automate
-A C++ project to determine and minimize a finite-state machine
+A C++ project to determine and complete a finite-state machine
