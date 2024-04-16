@@ -4,36 +4,44 @@ using namespace std;
 
 vector<char> alphabet = {'a', 'b', 'c', 'd', 'e', 'f','g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v','w', 'x','y', 'z'};
 
-int main() 
+int main()
 {
     cout << "LANCEMENT PROGRAMME" << endl;
     automate A = parsing(alphabet);
     printAutomate(A, alphabet);
     printInformationsAutomate(A, alphabet);
-
     /*
     automate AStandard = standardisationAutomate(&A);
     printAutomate(AStandard, alphabet);
     printInformationsAutomate(AStandard, alphabet);
+    */
 
+    /*
     automate AComplet = completionAutomate(&A);
     printAutomate(AComplet, alphabet);
     printInformationsAutomate(AComplet, alphabet);
     */
-
+    
     automate ADeter = determinisationAutomate(&A);
     printAutomate(ADeter, alphabet);
     printInformationsAutomate(ADeter, alphabet);
     
     /*
     cout << "COMPLEMENT = " << endl;
-    automate Acomplement = complementAutomate(&ADeter);
+    automate Acomplement = complementAutomate(&A);
     printAutomate(Acomplement, alphabet);
     printInformationsAutomate(Acomplement, alphabet);
     */
-
-    cout << "\n";
+    /*
+    vector<string> LISTEmot = { "abbbaa", "a", "abaa" };
+    vector<bool> RES = testReconnaissanceMot(A, LISTEmot);
+    for (int i = 0; i < LISTEmot.size(); i++)
+    {
+        cout << "LISTEmot[i] = " << LISTEmot[i] << " | and res = " << RES[i] << endl;
+    }
+    */
     return 0;
+
 }
 
 

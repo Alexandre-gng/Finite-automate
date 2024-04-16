@@ -34,7 +34,7 @@ typedef struct automate {
 automate parsing(vector<char>);
 
 
-// ========================= Fonctions ciblant un automate =========================
+// ================== Fonctions ciblant un automate ==================
 // Crée un automate
 automate createAutomate(int, int , int , int , int , vector<etat*>, vector<etat*>, vector<etat*>);
 // Affichage du tableau de l'automate
@@ -57,9 +57,8 @@ automate completionAutomate(automate*);
 // Complément du langage d'un automate
 automate complementAutomate(automate*);
 
-
 // Test de reconnaissance d'un mot
-bool testReconnaissanceMot(automate, vector<string>);
+vector<bool> testReconnaissanceMot(automate, vector<string>);
 
 
 // ========================= Fonctions ciblant un état =========================
@@ -76,5 +75,8 @@ bool verifCHARinVECTOR(char, vector<char>);
 bool verifSTRINGinVECTOR(string, vector<string>);
 // Retourne l'index d'un caractère dans un vector<string>
 int indexCHARinVECTOR(char, vector<char>);
+// Retourne l'index d'un caractère dans un string
+int indexCHARinSTRING(char, string);
+
 
 #endif //AUTOMATE_AUTOMSTRUCT_H

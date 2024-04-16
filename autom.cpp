@@ -19,6 +19,14 @@ automate createAutomate(int nbtransitions,int nbsymboles, int nbetats, int nbeta
 // Affiche un automate sous forme de tableau
 void printAutomate(automate A, vector<char> alphabet)
 {
+    int sizeMax = 1;
+    for (auto TEMP : A.listeEtats)
+    {
+        if (TEMP->name.size() > sizeMax )
+        {
+            sizeMax = TEMP->name.size();
+        }
+    }
     // 2*nbEtats - 1 = nb caractère ds les colonnes [1; nbSymboles]
     int TEMPcpt = 0;
     int IDEtatP = -1; int IDEtatI = -1;
@@ -36,7 +44,12 @@ void printAutomate(automate A, vector<char> alphabet)
             IDEtatI = i->etatID;
         }
     }
-    cout << "    | etats |";
+    cout << "    | etats";
+    for (int c = 0; c < sizeMax; c++)
+    {
+        cout << " ";
+    }
+    cout << "|";
     for (int i = 0; i<A.nbSymboles; i++)
     {
         for (int k = 0; k < A.nbEtats; k++)
@@ -57,15 +70,23 @@ void printAutomate(automate A, vector<char> alphabet)
             cout << "\nE/S |   ";
             if (A.listeEtats[j]->name == "")
             {
-                cout << A.listeEtats[j]->etatID << "   |";
+                cout << A.listeEtats[j]->etatID;
             }
             else
             {
-                cout << A.listeEtats[j]->name << "   |";
+                cout << A.listeEtats[j]->name;
+                for (int c = 0; c < 3 + sizeMax - A.listeEtats[j]->name.size(); c++)
+                {
+                    cout << " ";
+                }
+                cout << "|";
             }
+
             for (int m = 0; m < A.nbSymboles; m++) // TOUTE CETTE BOUCLE EST UN PUR COPIE/COLLE, ATTENDRE D'AUTRES TESTS POUR VALIDER
             {
                 TEMPcpt = 0;
+                bool TEMPbool0 = true;
+                int TEMPcpt2 = 0;
                 TEMPlisteINT.clear();
                 for (int s = 0; s < A.nbEtats; s++)
                 {
@@ -73,6 +94,7 @@ void printAutomate(automate A, vector<char> alphabet)
                     {
                         TEMPcpt++;
                         TEMPlisteINT.push_back(A.listeEtats[j]->listeEtatsSortants[m][s]->etatID);
+                        TEMPbool0 = false;
                     }
                 }
                 for (int d = 0; d < TEMPcpt; d++)
@@ -81,15 +103,26 @@ void printAutomate(automate A, vector<char> alphabet)
                     if (A.listeEtats[j]->listeEtatsSortants[m][TEMPlisteINT[d]]->name != "")
                     {
                         cout << A.listeEtats[j]->listeEtatsSortants[m][TEMPlisteINT[d]]->name;
+                        TEMPcpt2 += A.listeEtats[j]->listeEtatsSortants[m][TEMPlisteINT[d]]->name.size();
                     }
                     else
                     {
                         cout << TEMPlisteINT[d];
                     }
                 }
-                for (int q = 0; q < A.nbEtats * A.nbSymboles + 1 - TEMPcpt * 2; q++)
+                if (TEMPbool0 == false)
                 {
-                    cout << " ";
+                    for (int q = 0; q < A.nbEtats * 2 - TEMPcpt2; q++)
+                    {
+                        cout << " ";
+                    }
+                }
+                else
+                {
+                    for (int q = 0; q < A.nbEtats * 2 + 1; q++)
+                    {
+                        cout << " ";
+                    }
                 }
                 cout << "|";
             }
@@ -104,11 +137,18 @@ void printAutomate(automate A, vector<char> alphabet)
             }
             else
             {
-                cout << A.listeEtats[j]->name << "   |";
+                cout << A.listeEtats[j]->name;
+                for (int c = 0; c < 3 + sizeMax - A.listeEtats[j]->name.size(); c++)
+                {
+                    cout << " ";
+                }
+                cout << "|";
             }
             for (int m = 0; m < A.nbSymboles; m++)
             {
                 TEMPcpt = 0;
+                bool TEMPbool0 = true;
+                int TEMPcpt2 = 0;
                 TEMPlisteINT.clear();
                 for (int s = 0; s < A.nbEtats; s++)
                 {
@@ -116,6 +156,7 @@ void printAutomate(automate A, vector<char> alphabet)
                     {
                         TEMPcpt++;
                         TEMPlisteINT.push_back(A.listeEtats[j]->listeEtatsSortants[m][s]->etatID);
+                        TEMPbool0 = false;
                     }
                 }
                 for (int d = 0; d < TEMPcpt; d++)
@@ -124,15 +165,26 @@ void printAutomate(automate A, vector<char> alphabet)
                     if (A.listeEtats[j]->listeEtatsSortants[m][TEMPlisteINT[d]]->name != "")
                     {
                         cout << A.listeEtats[j]->listeEtatsSortants[m][TEMPlisteINT[d]]->name;
+                        TEMPcpt2 += A.listeEtats[j]->listeEtatsSortants[m][TEMPlisteINT[d]]->name.size();
                     }
                     else
                     {
                         cout << TEMPlisteINT[d];
                     }
                 }
-                for (int q = 0; q < A.nbEtats*A.nbSymboles+1-TEMPcpt*2; q++)
+                if (TEMPbool0 == false)
                 {
-                    cout << " ";
+                    for (int q = 0; q < A.nbEtats * 2 - TEMPcpt2; q++)
+                    {
+                        cout << " ";
+                    }
+                }
+                else
+                {
+                    for (int q = 0; q < A.nbEtats * 2 + 1; q++)
+                    {
+                        cout << " ";
+                    }
                 }
                 cout << "|";
             }
@@ -146,11 +198,18 @@ void printAutomate(automate A, vector<char> alphabet)
             }
             else
             {
-                cout << A.listeEtats[j]->name << "   |";
+                cout << A.listeEtats[j]->name;
+                for (int c = 0; c < 3 + sizeMax - A.listeEtats[j]->name.size(); c++)
+                {
+                    cout << " ";
+                }
+                cout << "|";
             }
             for (int m = 0; m < A.nbSymboles; m++)
             {
                 TEMPcpt = 0;
+                bool TEMPbool0 = true;
+                int TEMPcpt2 = 0;
                 TEMPlisteINT.clear();
                 for (int s = 0; s < A.nbEtats; s++)
                 {
@@ -158,6 +217,7 @@ void printAutomate(automate A, vector<char> alphabet)
                     {
                         TEMPcpt++;
                         TEMPlisteINT.push_back(A.listeEtats[j]->listeEtatsSortants[m][s]->etatID);
+                        TEMPbool0 = false;
                     }
                 }
                 for (int d = 0; d < TEMPcpt; d++)
@@ -166,15 +226,26 @@ void printAutomate(automate A, vector<char> alphabet)
                     if (A.listeEtats[j]->listeEtatsSortants[m][TEMPlisteINT[d]]->name != "")
                     {
                         cout << A.listeEtats[j]->listeEtatsSortants[m][TEMPlisteINT[d]]->name;
+                        TEMPcpt2 += A.listeEtats[j]->listeEtatsSortants[m][TEMPlisteINT[d]]->name.size();
                     }
                     else
                     {
                         cout << TEMPlisteINT[d];
                     }
                 }
-                for (int q = 0; q < A.nbEtats*A.nbSymboles+1-TEMPcpt*2; q++)
+                if (TEMPbool0 == false)
                 {
-                    cout << " ";
+                    for (int q = 0; q < A.nbEtats * 2 - TEMPcpt2; q++)
+                    {
+                        cout << " ";
+                    }
+                }
+                else
+                {
+                    for (int q = 0; q < A.nbEtats * 2 + 1; q++)
+                    {
+                        cout << " ";
+                    }
                 }
                 cout << "|";
             }
@@ -188,11 +259,18 @@ void printAutomate(automate A, vector<char> alphabet)
             }
             else
             {
-                cout << A.listeEtats[j]->name << "   |";
+                cout << A.listeEtats[j]->name;
+                for (int c = 0; c < 3 + sizeMax - A.listeEtats[j]->name.size(); c++)
+                {
+                    cout << " ";
+                }
+                cout << "|";
             }
             for (int m = 0; m < A.nbSymboles; m++)
             {
                 TEMPcpt = 0;
+                bool TEMPbool0 = true;
+                int TEMPcpt2 = 0;
                 TEMPlisteINT.clear();
                 for (int s = 0; s < A.nbEtats; s++)
                 {
@@ -200,6 +278,7 @@ void printAutomate(automate A, vector<char> alphabet)
                     {
                         TEMPcpt++;
                         TEMPlisteINT.push_back(A.listeEtats[j]->listeEtatsSortants[m][s]->etatID);
+                        TEMPbool0 = false;
                     }
                 }
                 for (int d = 0; d < TEMPcpt; d++)
@@ -208,15 +287,26 @@ void printAutomate(automate A, vector<char> alphabet)
                     if (A.listeEtats[j]->listeEtatsSortants[m][TEMPlisteINT[d]]->name != "")
                     {
                         cout << A.listeEtats[j]->listeEtatsSortants[m][TEMPlisteINT[d]]->name;
+                        TEMPcpt2 += A.listeEtats[j]->listeEtatsSortants[m][TEMPlisteINT[d]]->name.size();
                     }
                     else
                     {
                         cout << TEMPlisteINT[d];
                     }
                 }
-                for (int q = 0; q < A.nbEtats*A.nbSymboles+1-TEMPcpt*2; q++)
+                if (TEMPbool0 == false)
                 {
-                    cout << " ";
+                    for (int q = 0; q < A.nbEtats * 2 - TEMPcpt2; q++)
+                    {
+                        cout << " ";
+                    }
+                }
+                else
+                {
+                    for (int q = 0; q < A.nbEtats * 2 + 1; q++)
+                    {
+                        cout << " ";
+                    }
                 }
                 cout << "|";
             }
@@ -613,22 +703,42 @@ automate complementAutomate(automate* A)
 
 
 // Teste la reconnaissance d'un mot sur un automate
-bool testReconnaissanceMot(automate A, vector<string> LISTEmot)
+vector<bool> testReconnaissanceMot(automate A, vector<string> LISTEmot)
 {
-    for (string mot : LISTEmot)
+    int cpt = 0;
+    // Résultat de chaque mot: le res de LISTEmot[i] est à l'indice i de resVECTOR 
+    vector<bool> resVECTOR(LISTEmot.size() - 1);
+    cout << "reco1" << endl;
+    for (auto EtatEntre: A.listeEtatsEntrees)
     {
-        int TAILLEmot = mot.size();
-        for (auto etatEntre : A.listeEtatsEntrees)
+        for (string mot : LISTEmot)
         {
-            for (char cara : mot)
+            for (char c : mot)
             {
-                
+                for (int j = 0; j < A.nbEtats; j++)
+                {
+                    if (true)
+                    {
+                        return resVECTOR;
+                    }
+                }
             }
         }
     }
-    return false;
+    return resVECTOR;
 }
 
+/*
+if (A.listeEtats[i]->listeEtatsSortants[c][j] != NULL)
+                        {
+                            if (A.listeEtats[i]->listeEtatsSortants[c][j]->sortie == true)
+                            {
+                                cout << "CESt GAGNE" << endl;
+                                resVECTOR[cpt] = true;
+                            }
+                        }
+
+*/
 
 // Vérifie la présence d'un INT dans un vector<int>
 bool verifINTinVECTOR(int a, vector<int> v)
@@ -681,4 +791,21 @@ int indexCHARinVECTOR(char a, vector<char> v)
             cpt++;
         }
     }
+}
+// Retourne l'index d'un caractère dans un string
+int indexCHARinSTRING(char a, string s)
+{
+    int cpt = 0;
+    for (char k : s)
+    {
+        if (k == a)
+        {
+            return cpt;
+        }
+        else
+        {
+            cpt++;
+        }
+    }
+    return -1;
 }
