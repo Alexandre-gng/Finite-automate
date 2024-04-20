@@ -10,13 +10,12 @@ vector<etat*> listeEtatsEntrees; vector<etat*> listeEtatsSorties;
 vector<etat*> listeEtats;
 
 etat *E;
-
-ifstream monFlux("C:/Users/alexa/OneDrive/Bureau/Automate projet/automate/file.txt");
 double nombre;
 
 // Récupère tout le contenu du fichier txt et le convertit en automate
-automate parsing(vector<char> alphabet)
+automate parsing(vector<char> alphabet, string pathFile)
 {
+    ifstream monFlux(pathFile);
     if (monFlux)
     {
         // Récupère le nombre d'états et de symboles
@@ -142,6 +141,7 @@ automate parsing(vector<char> alphabet)
         cout << "Probleme de fichier txt" << endl;
     }
     automate A = createAutomate(nbTransitions ,nbSymboles, nbEtats, nbEtatsEntrees, nbEtatsSorties, listeEtatsEntrees, listeEtatsSorties, listeEtats);
-    
+    monFlux.close();
+
     return A;
 }

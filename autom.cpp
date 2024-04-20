@@ -31,7 +31,7 @@ void printAutomate(automate A, vector<char> alphabet)
     int TEMPcpt = 0;
     int IDEtatP = -1; int IDEtatI = -1;
     vector<int> TEMPlisteINT;
-    
+
     // Obtention de l'ID de l'état poubelle et initial
     for (auto i : A.listeEtats)
     {
@@ -65,7 +65,7 @@ void printAutomate(automate A, vector<char> alphabet)
     }
     for (int j = 0; j < A.nbEtats; j++)
     {
-        if ((A.listeEtats[j]->entree == true) && (A.listeEtats[j]->sortie == true)) // Si état d'entrée et de sortie
+        if (A.listeEtats[j]->entree && A.listeEtats[j]->sortie) // Si état d'entrée et de sortie
         {
             cout << "\nE/S |   ";
             if (A.listeEtats[j]->name == "")
@@ -110,7 +110,7 @@ void printAutomate(automate A, vector<char> alphabet)
                         cout << TEMPlisteINT[d];
                     }
                 }
-                if (TEMPbool0 == false)
+                if (!TEMPbool0)
                 {
                     for (int q = 0; q < A.nbEtats * 2 - TEMPcpt2; q++)
                     {
@@ -127,9 +127,9 @@ void printAutomate(automate A, vector<char> alphabet)
                 cout << "|";
             }
         }
-        if ((A.listeEtats[j]->entree == true) && (A.listeEtats[j]->sortie == false)) // Si état d'entrée
+        if ((A.listeEtats[j]->entree) && (!A.listeEtats[j]->sortie)) // Si état d'entrée
         {
-           
+
             cout << "\n E  |   ";
             if (A.listeEtats[j]->name == "")
             {
@@ -172,7 +172,7 @@ void printAutomate(automate A, vector<char> alphabet)
                         cout << TEMPlisteINT[d];
                     }
                 }
-                if (TEMPbool0 == false)
+                if (!TEMPbool0)
                 {
                     for (int q = 0; q < A.nbEtats * 2 - TEMPcpt2; q++)
                     {
@@ -189,7 +189,7 @@ void printAutomate(automate A, vector<char> alphabet)
                 cout << "|";
             }
         }
-        if ((A.listeEtats[j]->entree == false) && (A.listeEtats[j]->sortie == true)) // Si état de sortie
+        if (!(A.listeEtats[j]->entree) && (A.listeEtats[j]->sortie)) // Si état de sortie
         {
             cout << "\n S  |   ";
             if (A.listeEtats[j]->name == "")
@@ -233,7 +233,7 @@ void printAutomate(automate A, vector<char> alphabet)
                         cout << TEMPlisteINT[d];
                     }
                 }
-                if (TEMPbool0 == false)
+                if (!TEMPbool0)
                 {
                     for (int q = 0; q < A.nbEtats * 2 - TEMPcpt2; q++)
                     {
@@ -250,7 +250,7 @@ void printAutomate(automate A, vector<char> alphabet)
                 cout << "|";
             }
         }
-        if ((A.listeEtats[j]->entree == false) && (A.listeEtats[j]->sortie == false)) // Si état sans sortie/ entrée
+        if (!(A.listeEtats[j]->entree) && !(A.listeEtats[j]->sortie)) // Si état sans sortie/ entrée
         {
             cout << "\n    |   ";
             if (A.listeEtats[j]->name == "")
@@ -294,7 +294,7 @@ void printAutomate(automate A, vector<char> alphabet)
                         cout << TEMPlisteINT[d];
                     }
                 }
-                if (TEMPbool0 == false)
+                if (!TEMPbool0)
                 {
                     for (int q = 0; q < A.nbEtats * 2 - TEMPcpt2; q++)
                     {
@@ -321,7 +321,7 @@ void printAutomate(automate A, vector<char> alphabet)
 void printInformationsAutomate(automate A, vector<char> alphabet)
 {
     vector<string> TEMPResVECTOR = checkDeterministe(A, alphabet);
-    cout << "DETERMINISTE: ";
+    cout << "\nDETERMINISTE: ";
     if (stoi(TEMPResVECTOR[0]))
     {
         cout << "oui" << endl;
@@ -382,7 +382,7 @@ vector<string> checkDeterministe(automate A, vector<char> alphabet)
                 if (cpt > 1)
                 {
                     resTestStandard[0] = "0";
-                    resTestStandard[1] = "il existe au moins un etat (etat #" + to_string(i) + ") avec au moins deux transitions sortantes de meme valeur";
+                    resTestStandard[1] = "il existe au moins un etat (etat #" + A.listeEtats[i]->name + ") avec au moins deux transitions sortantes de meme valeur";
                     return resTestStandard;
                 }
             }
@@ -396,7 +396,7 @@ vector<string> checkDeterministe(automate A, vector<char> alphabet)
 // Vérifie si un automate est standard
 vector<string> checkStandard(automate A, vector<char> alphabet)
 {
-    vector<string> resTestStandard(2); // resTestStandard[0] = 1 si Standard et 0 si non standard // resTestStandard[1] = la raison de pourquoi il n'est pas standard 
+    vector<string> resTestStandard(2); // resTestStandard[0] = 1 si Standard et 0 si non standard // resTestStandard[1] = la raison de pourquoi il n'est pas standard
     // Vérifie si l'automate a bien un seul état d'entrée
     if (A.nbEtatsEntrees > 1)
     {
@@ -443,7 +443,7 @@ vector<string> checkComplet(automate A, vector<char> alphabet)
                 if (cpt == A.nbEtats)
                 {
                     resTestStandard[0] = "0";
-                    resTestStandard[1] = "il existe au moins un etat (#" + to_string(i) + ") qui ne possede pas de transition sortante en " + alphabet[m] + ")";
+                    resTestStandard[1] = "il existe au moins un etat (#" + A.listeEtats[i]->name + ") qui ne possede pas de transition sortante en " + alphabet[m] + ")";
                     return resTestStandard;
                 }
             }
@@ -511,21 +511,23 @@ automate standardisationAutomate(automate *A)
 // Déterminise un automate
 automate determinisationAutomate(automate* A)
 {
-    vector<etat*> VECTORPoubelle(A->nbEtats +10); // Afin de créer un automate sans liste d'états
     automate ADeterministe = createAutomate(A->nbTransitions, A->nbSymboles, A->nbEtats, A->nbEtatsEntrees, A->nbEtatsSorties, A->listeEtatsEntrees, A->listeEtatsSorties, A->listeEtats);
     automate* P_ADeterministe = &ADeterministe;
     string TEMPSTRING;
     vector<string> TEMPLigneVECTOR; // Vérifie si on doit arrêter la determinsation
-    vector<string> VECTORNouveauxEtats(A->nbEtatsEntrees);
-    vector<int> TEMPINTEtatsSortants; // Liste des etats vers lesquels l'état etudié se dirige
+    vector<string> VECTORNouveauxEtats(1);
+    vector<int> TEMPINTEtatsSortants; // Liste des etats vers lesquels l'état étudié se dirige
     int cpt = 1; bool sor = false;
     // Récupération des états d'entrées de A
-    for (int i = 0; i < A->nbEtatsEntrees; i++)
+    for (auto i : A->listeEtatsEntrees)
     {
-        VECTORNouveauxEtats[0] += to_string(A->listeEtatsEntrees[i]->etatID);
-        if (A->listeEtatsEntrees[i]->sortie)
+        if (i != NULL)
         {
-            sor = true;
+            VECTORNouveauxEtats[0] += i->name;
+            if (i->sortie)
+            {
+                sor = true;
+            }
         }
     }
     // Création et ajout de l'etat d'entré de ADeterministe
@@ -542,7 +544,8 @@ automate determinisationAutomate(automate* A)
     for (int i = 0; i < cpt; i++)
     {
         TEMPLigneVECTOR.clear();
-        string en = VECTORNouveauxEtats[VECTORNouveauxEtats.size() - 1];
+        //string en = VECTORNouveauxEtats[VECTORNouveauxEtats.size() - 1];
+        string en = VECTORNouveauxEtats[i];
         for (int s = 0; s < A->nbSymboles; s++)
         {
             TEMPSTRING = "";
@@ -558,51 +561,63 @@ automate determinisationAutomate(automate* A)
                         TEMPINTEtatsSortants.push_back(es);
                     }
                 }
-                if (!verifSTRINGinVECTOR(TEMPSTRING, VECTORNouveauxEtats))
-                {
-                    VECTORNouveauxEtats.push_back(TEMPSTRING);
-                    cpt++;
-                    bool sor = false;
-                    for (char b : TEMPSTRING)
-                    {
-                        if (A->listeEtats[(b - '0')]->sortie)
-                        {
-                            sor = true;
-                        }
-                    }
-                    // Création et ajout nouvel état
-                    etat* E = createEtat(cpt - 1, false, sor, A->nbSymboles, A->nbEtats);
-                    E->name = TEMPSTRING;
-                    E->etatID = cpt - 1;
-                    if (E->sortie)
-                    {
-                        P_ADeterministe->listeEtatsSorties.push_back(E);
-                        P_ADeterministe->nbEtatsSorties ++;
-                    }
-                    P_ADeterministe->listeEtats.push_back(E);
-                    TEMPINTEtatsSortants.resize(0);
-                }
-                else
-                {
-                    TEMPLigneVECTOR.push_back(TEMPSTRING);
-                }
             }
-        }
-        if (TEMPLigneVECTOR.size() == A->nbSymboles)
-        {
-            return ADeterministe;
+            // Conditions afin de créer un nouvel état:
+            // 1. Qu'il n'existe pas déjà
+            // 2. Qu'il existe (ex e.name = "")
+            // 3. Qu'il n'y ai pas de doublon (ex: e.name = "022")
+            if (verifDoubleCHARinSTRING(TEMPSTRING))
+            {
+                string T;
+                for (auto a: TEMPSTRING)
+                {
+                    if (!verifCHARinSTRING(a, T))
+                    {
+                        T += a;
+                    }
+                }
+                TEMPSTRING = T;
+            }
+
+            sort(TEMPSTRING.begin(), TEMPSTRING.end());
+            if (!verifSTRINGinVECTOR(TEMPSTRING, VECTORNouveauxEtats) && TEMPSTRING != "")
+            {
+                VECTORNouveauxEtats.push_back(TEMPSTRING);
+                cpt++;
+                bool sor = false;
+                for (char b : TEMPSTRING)
+                {
+                    if (A->listeEtats[(b - '0')]->sortie)
+                    {
+                        sor = true;
+                        break;
+                    }
+                }
+                // Création et ajout nouvel état
+                etat* E = createEtat(cpt - 1, false, sor, A->nbSymboles, A->nbEtats);
+                E->name = TEMPSTRING;
+                E->etatID = cpt - 1;
+                if (E->sortie)
+                {
+                    P_ADeterministe->listeEtatsSorties.push_back(E);
+                    P_ADeterministe->nbEtatsSorties ++;
+                }
+                P_ADeterministe->listeEtats.push_back(E);
+                TEMPINTEtatsSortants.resize(0);
+            }
+            else
+            {
+                TEMPLigneVECTOR.push_back(TEMPSTRING);
+            }
         }
     }
 
+    // SECONDE PARTIE, CONNEXION DES :
     vector<int> TEMPINTListeSortants;
     vector<int> TEMPINTListeEntrants;
-    // SECONDE PARTIE: 
     for (auto TEMPetat : P_ADeterministe->listeEtats)
     {
         etat* E = TEMPetat;
-        TEMPINTListeSortants.clear();
-        TEMPINTListeEntrants.clear();
-
         // Création des listes de sortants et d'entrants pour chaque symbole
         for (int s = 0; s < A->nbSymboles; s++)
         {
@@ -612,17 +627,25 @@ automate determinisationAutomate(automate* A)
             // Pour chaque état contenu dans l'état courant de P_ADeterministe
             for (auto TEMPMiniEtat : TEMPetat->name)
             {
-                int TEMPMiniEtatINT = TEMPMiniEtat - '0';
-
+                //int TEMPMiniEtatINT = TEMPMiniEtat - '0';
+                int TEMPMiniEtatINT;
+                if (TEMPMiniEtat - '0' <= 10)
+                {
+                    TEMPMiniEtatINT = TEMPMiniEtat - '0';
+                }
+                else
+                {
+                    TEMPMiniEtatINT = TEMPetat->etatID;
+                }
                 // Pour chaque état de A
                 for (int e = 0; e < A->nbEtats; e++)
                 {
                     // Si l'état courant de P_ADeterministe contient un état qui a une transition sortante vers l'état e de A avec le symbole s
+                    // A.listeEtats[1]->listeEtatsSortants[0][2]->name << end;
                     if (A->listeEtats[TEMPMiniEtatINT]->listeEtatsSortants[s][e] != NULL)
                     {
                         TEMPINTListeSortants.push_back(A->listeEtats[TEMPMiniEtatINT]->listeEtatsSortants[s][e]->etatID);
                     }
-
                     // Si l'état courant de P_ADeterministe contient un état qui a une transition entrante depuis l'état e de A avec le symbole s
                     if (A->listeEtats[TEMPMiniEtatINT]->listeEtatsEntrants[s][e] != NULL)
                     {
@@ -630,13 +653,51 @@ automate determinisationAutomate(automate* A)
                     }
                 }
             }
-
-            etat* etatSortant = P_ADeterministe->listeEtats[TEMPINTListeSortants[TEMPINTListeSortants.size() - 1]];
-            E->listeEtatsSortants[s][etatSortant->etatID] = etatSortant;
-            etatSortant->listeEtatsEntrants[s][E->etatID] = E;
+            string a = "";
+            // Concaténation de tous les états sortants de TEMPetat
+            for (int x = 0; x < TEMPINTListeSortants.size(); x++)
+            {
+                a += to_string(TEMPINTListeSortants[x]);
+            }
+            // Cas où deux états pointent vers un même état (ex: a = 22)
+            if (verifDoubleCHARinSTRING(a))
+            {
+                string T;
+                for (auto v: a)
+                {
+                    if (!verifCHARinSTRING(v, T))
+                    {
+                        T += v;
+                    }
+                }
+                a = T;
+            }
+            // Concaténation de tous les états entrants de TEMPetat
+            string b = "";
+            for (int x = 0; x < TEMPINTListeEntrants.size(); x++)
+            {
+                b += to_string(TEMPINTListeEntrants[x]);
+            }
+            sort(a.begin(), a.end());
+            sort(b.begin(), b.end());
+            // Ajout états sortants
+            for (auto x: P_ADeterministe->listeEtats)
+            {
+                if (x->name == a)
+                {
+                    TEMPetat->listeEtatsSortants[s][x->etatID] = x;
+                }
+            }
+            // Ajout états entrants
+            for (auto x: P_ADeterministe->listeEtats)
+            {
+                if (x->name == b)
+                {
+                    TEMPetat->listeEtatsEntrants[s][x->etatID] = x;
+                }
+            }
         }
     }
-   
     P_ADeterministe->nbEtatsEntrees = 1;
     P_ADeterministe->nbEtats = cpt;
     P_ADeterministe->nbTransitions = cpt * P_ADeterministe->nbSymboles;
@@ -644,7 +705,7 @@ automate determinisationAutomate(automate* A)
 }
 
 
-// Complète un automate 
+// Complète un automate
 automate completionAutomate(automate* A)
 {
     automate AComplet = *A;
@@ -692,7 +753,7 @@ automate complementAutomate(automate* A)
 
     for (auto e : P_AComplement->listeEtats)
     {
-        if (e->sortie == true)
+        if (e->sortie)
             e->sortie = false;
         else
             e->sortie = true;
@@ -701,44 +762,149 @@ automate complementAutomate(automate* A)
     return AComplement;
 }
 
-
-// Teste la reconnaissance d'un mot sur un automate
-vector<bool> testReconnaissanceMot(automate A, vector<string> LISTEmot)
+void freeAutomate(automate* A)
 {
-    int cpt = 0;
-    // Résultat de chaque mot: le res de LISTEmot[i] est à l'indice i de resVECTOR 
-    vector<bool> resVECTOR(LISTEmot.size() - 1);
-    cout << "reco1" << endl;
-    for (auto EtatEntre: A.listeEtatsEntrees)
-    {
-        for (string mot : LISTEmot)
-        {
-            for (char c : mot)
-            {
-                for (int j = 0; j < A.nbEtats; j++)
-                {
-                    if (true)
-                    {
-                        return resVECTOR;
+    for (int i = 0; i < A->nbEtats; i++) {
+        for (int s = 0; s < A->nbSymboles; s++) {
+            for (int j = 0; j < A->nbEtats; j++) {
+                if (A->listeEtats[i]->listeEtatsSortants[s][j] != NULL)
+                    A->listeEtats[i]->listeEtatsSortants[s][j] = NULL;
+                if (A->listeEtats[i]->listeEtatsEntrants[s][j] != NULL)
+                    A->listeEtats[i]->listeEtatsEntrants[s][j] = NULL;
+            }
+        }
+    }
+    A->nbEtats = 0;
+    A->nbSymboles = 0;
+    A->nbEtatsEntrees = 0;
+    A->nbEtatsSorties = 0;
+}
+
+vector<bool> testReconnaissanceMot(automate &A, vector<string> &mots) {
+    vector<bool> resultats(mots.size());
+    cout << "T0" << endl;
+    for (int i = 0; i < mots.size(); i++) {
+        string mot = mots[i];
+        int longueurMot = mot.length();
+
+        // Parcours en largeur pour vérifier si le mot est accepté par l'automate
+        queue<etat*> fileEtats;
+        vector<etat*> etatsCourants;
+
+        // Ajouter les états d'entrée à la file
+        for (etat* e : A.listeEtatsEntrees) {
+            fileEtats.push(e);
+        }
+        cout << "T1" << endl;
+        // Parcourir le mot caractère par caractère
+        for (int j = 0; j < longueurMot; j++) {
+            int tailleFile = fileEtats.size();
+            cout << "T2" << endl;
+            // Traiter chaque état dans la file actuelle
+            for (int k = 0; k < tailleFile; k++) {
+                etat* etatCourant = fileEtats.front();
+                fileEtats.pop();
+
+                // Vérifier les transitions pour le caractère courant
+                int indiceSymbole = mot[j] - 'a';
+                if (indiceSymbole >= 0 && indiceSymbole < A.nbSymboles &&
+                    j < longueurMot - 1) {
+                    // Ajouter les états suivants à la file (s'il en existe)
+                    if (!etatCourant->listeEtatsSortants[indiceSymbole].empty()) {
+                        for (etat* e : etatCourant->listeEtatsSortants[indiceSymbole]) {
+                            fileEtats.push(e);
+                        }
                     }
+                } else {
+                    // Stocker les états courants pour le dernier caractère
+                    etatsCourants.push_back(etatCourant);
                 }
             }
         }
+
+        // Vérifier si l'un des états courants est un état de sortie
+        resultats[i] = false;
+        for (etat* e : etatsCourants) {
+            if (e->sortie) {
+                resultats[i] = true;
+                break;
+            }
+        }
+    }
+    for (int i = 0; i<resultats.size(); i++)
+    {
+        cout << " MOT #" << i << " = " << resultats[i] << endl;
+    }
+    return resultats;
+}
+
+// Teste la reconnaissance d'une liste de mots sur un automate
+vector<bool> testReconnaissanceListeMots(automate A, vector<string> LISTEmot)
+{
+    int cpt = 0;
+    // Résultat de chaque mot: le res de LISTEmot[i] est à l'indice i de resVECTOR
+    vector<bool> resVECTOR(LISTEmot.size() - 1, false);
+
+    for (int i = 0; i < LISTEmot.size(); i++)
+    {
+        resVECTOR[i] = testReconnaissanceMot(A, LISTEmot[i]);
+
     }
     return resVECTOR;
 }
 
-/*
-if (A.listeEtats[i]->listeEtatsSortants[c][j] != NULL)
-                        {
-                            if (A.listeEtats[i]->listeEtatsSortants[c][j]->sortie == true)
-                            {
-                                cout << "CESt GAGNE" << endl;
-                                resVECTOR[cpt] = true;
-                            }
-                        }
-
-*/
+// Test reconnaissance d'un seul mot sur un automate
+bool testReconnaissanceMot(automate A, string mot)
+{
+    int motSize = mot.size();
+    int res = 0;
+    for (auto EE: A.listeEtatsEntrees)
+    {
+        res = 0;
+        etat* EActuel = EE;
+        // Vérifie si l'état d'entrée est un état de sortie
+        if (EActuel->sortie)
+        {
+            return true;
+            continue;
+        }
+        int cpt = 0;
+        for (int cara = 0; cara < A.nbSymboles; cara++)
+        {
+            if (res == 1)
+            {
+                res = 0;
+                cara = 0;
+            }
+            for (int e = 0; e < A.nbEtats; e++)
+            {
+                if (res == 1)
+                {
+                    cara = 0;
+                    e = 0;
+                    res = 0;
+                }
+                if (EActuel->listeEtatsSortants[cara][e] != NULL && cpt < motSize)
+                {
+                    cpt ++;
+                    EActuel = EActuel->listeEtatsSortants[cara][e];
+                    e = 0;
+                    cara = 0;
+                    res = 1;
+                    if (EActuel->sortie && cpt == motSize)
+                    {
+                        return true;
+                    }
+                }
+                if (cpt == motSize)
+                {
+                    break;
+                }
+            }
+        }
+    }
+    return false;
+}
 
 // Vérifie la présence d'un INT dans un vector<int>
 bool verifINTinVECTOR(int a, vector<int> v)
@@ -764,10 +930,31 @@ bool verifSTRINGinVECTOR(string a, vector<string> v)
     }
     return false;
 }
-// Vérifie la présence d'un CHAR dans un vector<CHAR>
-bool verifCHARinVECTOR(char a, vector<char> v)
+
+// Vérifie si un CHAR est présent plusieurs fois dans un STRING
+bool verifDoubleCHARinSTRING(string S)
 {
-    for (auto i: v)
+    int cpt = 0;
+    for (char a: S)
+    {
+        for (char b: S) {
+            if (b == a)
+            {
+                cpt ++;
+            }
+            if (cpt == 2)
+            {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+// Vérifie la présence d'un CHAR dans un STRING
+bool verifCHARinSTRING(char a, string S)
+{
+    for (auto i: S)
     {
         if (i == a)
         {
@@ -791,6 +978,7 @@ int indexCHARinVECTOR(char a, vector<char> v)
             cpt++;
         }
     }
+    return cpt;
 }
 // Retourne l'index d'un caractère dans un string
 int indexCHARinSTRING(char a, string s)
