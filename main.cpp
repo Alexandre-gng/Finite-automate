@@ -8,7 +8,7 @@ string pathFile;
 automate initAutomate()
 {
     int choix = 0;
-    pathFile = "C:/Users/alexa/CLionProjects/Automate/automates/C3-";
+    pathFile = "C:/Users/alexa/CLionProjects/Automate/automates/D2-";
     cout << "\nQuelle automate souhaitez-vous utiliser: ";
     cin >> choix;
     pathFile += to_string(choix) + ".txt";
@@ -24,8 +24,8 @@ int main()
 
     automate A = initAutomate();
     cout << "\n\n(1) Afficher l'automate\n" << "(2) Afficher les informations de l'automate\n" << "(3) Tester la reconnaissance d'un mot \n" << "(4) Standardiser l'automate \n"
-    << "(5) Determiniser et Completer l'automate\n" << "(6) Obtenir l'automate du langage complementaire\n" << "(70) Changer d'automate\n"
-    << "(99) Quitter le programme\n";
+         << "(5) Determiniser et Completer l'automate\n" << "(6) Obtenir l'automate du langage complementaire\n" << "(70) Changer d'automate\n"
+         << "(99) Quitter le programme\n";
     cin >> choix;
 
     while(choix != 99) {
@@ -44,7 +44,7 @@ int main()
             cin >> nbreMots;
             vector<string> LISTEmot(nbreMots);
             for (int i = 0; i < nbreMots; i++) {
-                cout << "Saisissez le mot " << i + 1 << " : ";
+                cout << "Saisissez le mot " << i + 1 << " :";
                 cin >> LISTEmot[i];
             }
             vector<bool> RESRECO(nbreMots);
@@ -52,7 +52,11 @@ int main()
 
             for (int i = 0; i<nbreMots; i++)
             {
-                cout << " MOT #" << i + 1  << " = " << RESRECO[i] << endl;
+                cout << " MOT #" << i + 1  << " : ";
+                if (RESRECO[i])
+                    cout << " reconnu" << endl;
+                else
+                    cout << " non reconnu" << endl;
             }
         }
         // Obtention automate standardisé
@@ -128,6 +132,7 @@ int main()
         if (choix == 70)
         {
             freeAutomate(&A);
+            //freeAutomate(&A);
             automate A = initAutomate();
         }
         // Quitter programme

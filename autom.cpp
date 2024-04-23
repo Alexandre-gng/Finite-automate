@@ -778,6 +778,7 @@ void freeAutomate(automate* A)
     A->nbSymboles = 0;
     A->nbEtatsEntrees = 0;
     A->nbEtatsSorties = 0;
+    A->nbTransitions = 0;
 }
 
 vector<bool> testReconnaissanceMot(automate &A, vector<string> &mots) {
@@ -858,17 +859,24 @@ bool testReconnaissanceMot(automate A, string mot)
 {
     int motSize = mot.size();
     int res = 0;
+    // Cas du mot vide
+    if (mot == "*")
+    {
+        for (auto EE: A.listeEtatsEntrees)
+        {
+            if (EE->sortie == true)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
     for (auto EE: A.listeEtatsEntrees)
     {
         res = 0;
+        int cpt = 0;
         etat* EActuel = EE;
         // Vérifie si l'état d'entrée est un état de sortie
-        if (EActuel->sortie)
-        {
-            return true;
-            continue;
-        }
-        int cpt = 0;
         for (int cara = 0; cara < A.nbSymboles; cara++)
         {
             if (res == 1)
@@ -884,7 +892,7 @@ bool testReconnaissanceMot(automate A, string mot)
                     e = 0;
                     res = 0;
                 }
-                if (EActuel->listeEtatsSortants[cara][e] != NULL && cpt < motSize)
+                if (EActuel->listeEtatsSortants[cara][e] != NULL && cpt < motSize && EActuel->listeEtatsSortants[cara][e]->name != "P")
                 {
                     cpt ++;
                     EActuel = EActuel->listeEtatsSortants[cara][e];
