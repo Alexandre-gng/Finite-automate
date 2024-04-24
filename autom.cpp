@@ -840,7 +840,7 @@ vector<bool> testReconnaissanceMot(automate &A, vector<string> &mots) {
 }
 
 // Teste la reconnaissance d'une liste de mots sur un automate
-vector<bool> testReconnaissanceListeMots(automate A, vector<string> LISTEmot)
+vector<bool> testReconnaissanceListeMots(automate A, vector<string> LISTEmot, vector<char> alphabet)
 {
     int cpt = 0;
     // Résultat de chaque mot: le res de LISTEmot[i] est à l'indice i de resVECTOR
@@ -848,14 +848,14 @@ vector<bool> testReconnaissanceListeMots(automate A, vector<string> LISTEmot)
 
     for (int i = 0; i < LISTEmot.size(); i++)
     {
-        resVECTOR[i] = testReconnaissanceMot(A, LISTEmot[i]);
+        resVECTOR[i] = testReconnaissanceMot(A, LISTEmot[i], alphabet);
 
     }
     return resVECTOR;
 }
 
 // Test reconnaissance d'un seul mot sur un automate
-bool testReconnaissanceMot(automate A, string mot)
+bool testReconnaissanceMot(automate A, string mot, vector<char> alphabet)
 {
     int motSize = mot.size();
     int res = 0;
@@ -877,36 +877,33 @@ bool testReconnaissanceMot(automate A, string mot)
         int cpt = 0;
         etat* EActuel = EE;
         // Vérifie si l'état d'entrée est un état de sortie
-        for (int cara = 0; cara < A.nbSymboles; cara++)
+        for (auto c: mot)
         {
-            if (res == 1)
-            {
-                res = 0;
-                cara = 0;
-            }
-            for (int e = 0; e < A.nbEtats; e++)
-            {
-                if (res == 1)
-                {
-                    cara = 0;
-                    e = 0;
+            int indexC = indexCHARinVECTOR(c, alphabet);
+            for (int cara = 0; cara < A.nbSymboles; cara++) {
+                if (res == 1) {
                     res = 0;
-                }
-                if (EActuel->listeEtatsSortants[cara][e] != NULL && cpt < motSize && EActuel->listeEtatsSortants[cara][e]->name != "P")
-                {
-                    cpt ++;
-                    EActuel = EActuel->listeEtatsSortants[cara][e];
-                    e = 0;
                     cara = 0;
-                    res = 1;
-                    if (EActuel->sortie && cpt == motSize)
-                    {
-                        return true;
-                    }
                 }
-                if (cpt == motSize)
-                {
-                    break;
+                for (int e = 0; e < A.nbEtats; e++) {
+                    if (res == 1) {
+                        cara = 0;
+                        e = 0;
+                        res = 0;
+                    }
+                    if (EActuel->listeEtatsSortants[cara][e] != NULL && cpt < motSize && EActuel->listeEtatsSortants[cara][e]->name != "P" && indexC == cara) {
+                        cpt++;
+                        EActuel = EActuel->listeEtatsSortants[cara][e];
+                        e = 0;
+                        cara = 0;
+                        res = 1;
+                        if (EActuel->sortie && cpt == motSize) {
+                            return true;
+                        }
+                    }
+                    if (cpt == motSize) {
+                        break;
+                    }
                 }
             }
         }
